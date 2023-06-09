@@ -36,10 +36,10 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     });
 
     Route::get('check', function (Request $request){
-        return auth()->user();
+        return $request->user()->is_admin;
     });
 
-    Route::group(['prefix' => 'admin'], function (){
+    Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function (){
         Route::group(['prefix' => 'news'], function (){
             Route::get('list', [NewsController::class, 'listNews']);
             Route::get('list/{id}', [NewsController::class, 'newsId']);
